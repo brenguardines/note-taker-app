@@ -1,0 +1,18 @@
+footer {
+  background-color: #f8f9fa;
+  padding: 1rem 0;
+  text-align: center;
+  border-top: 1px solid #e3e1e1;
+  margin-top: 2rem;
+}
+
+footer p {
+  margin: 0.5rem 0;
+  color: #6c757d;
+  font-family: 'Trebuchet MS', Arial, sans-serif;
+}
+
+footer p:last-child {
+  font-size: 0.9rem;
+}
+  

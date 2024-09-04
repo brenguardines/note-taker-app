@@ -1,0 +1,32 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    padding: 0.5rem 2rem;
+}
+
+li {
+    display: inline-block;
+    margin: 1rem;
+    cursor: pointer;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+}
+
+li.active {
+    font-weight: bold;
+    color: #007bff;
+}
+
+li:hover {
+    color: rgb(11, 117, 152);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.titulo {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
