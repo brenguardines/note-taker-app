@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom';
 import './Header.css'
 
 const Header = ({ onFilterChange }) => {
     const [activeFilter, setActiveFilter] = useState('all');
+    const location = useLocation();
 
     const handleFilterChange = (filter) => {
         setActiveFilter(filter);
@@ -17,9 +19,21 @@ const Header = ({ onFilterChange }) => {
 
         <nav>
             <ul>
-                <li onClick={() => handleFilterChange('all')} className={activeFilter === 'all' ? 'active' : ''}>Notes</li>
-                <li onClick={() => handleFilterChange('active')} className={activeFilter === 'active' ? 'active' : ''}>Active</li>
-                <li onClick={() => handleFilterChange('archived')} className={activeFilter === 'archived' ? 'archived' : ''}>Archived</li>
+            <li>
+                    <Link to="/" onClick={() => handleFilterChange('all')} className={activeFilter === 'all' ? 'active' : ''}>
+                        Notes
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/active" onClick={() => handleFilterChange('active')} className={activeFilter === 'active' ? 'active' : ''}>
+                        Active
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/archived" onClick={() => handleFilterChange('archived')} className={activeFilter === 'archived' ? 'archived' : ''}>
+                        Archived
+                    </Link>
+                </li>
             </ul>
         </nav>
     </header>

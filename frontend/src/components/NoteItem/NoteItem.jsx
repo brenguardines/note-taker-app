@@ -1,3 +1,4 @@
+import { Link  } from 'react-router-dom';
 import './NoteItem.css'
 
 const NoteItem = ({note, onDelete, onToggleArchive}) => {
@@ -9,6 +10,9 @@ const NoteItem = ({note, onDelete, onToggleArchive}) => {
         <button className="archiveButton" onClick={() => onToggleArchive(note.id)}>
           {note.archived ? 'Unarchive' : 'Archive'}
         </button>
+        <Link to={`/edit/${note.id}`}>
+          <button className="editButton">Edit</button>
+        </Link>
         <button className="deleteButton" onClick={() => onDelete(note.id)}>Delete</button>
       </div>
     </div>
