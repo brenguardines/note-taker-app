@@ -1,10 +1,9 @@
-import React, { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { NotesContext } from '../NoteContext/NoteContext';
+import axios from 'axios';
 import './CreateNote.css';
 
 const CreateNote = () => {
-    const { addNote } = useContext(NotesContext); 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
@@ -18,8 +17,15 @@ const CreateNote = () => {
             category,
             archived: false,
         };
-        addNote(newNote);
-        navigate('/');
+
+        axios.post('/api/notes', newNote)
+             .then(response => {
+                 console.log('Note created', response.data);
+                 navigate('/');
+             })
+             .catch(error => {
+                 console.error('There was an error creating the note', error);
+             });
     };
 
     return (

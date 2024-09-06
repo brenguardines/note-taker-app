@@ -1,43 +1,45 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState, useContext, useEffect } from 'react';
-import { NotesContext } from '../NoteContext/NoteContext';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import '../CreateNote/CreateNote';
 
 const EditNote = () => {
     const { id } = useParams(); 
     const navigate = useNavigate();
-    const { notes, updateNote } = useContext(NotesContext);
 
-    const [noteToEdit, setNoteToEdit] = useState(null);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
 
     useEffect(() => {
-        const foundNote = notes.find(note => note.id === parseInt(id));
-        if (foundNote) {
-            setNoteToEdit(foundNote);
-            setTitle(foundNote.title);
-            setContent(foundNote.content);
-            setCategory(foundNote.category);
-        }
-    }, [id, notes]);
-
-    if (!noteToEdit) {
-        return <div>Note not found</div>;
-    }
+        axios.get(`/api/notes/${id}`)
+             .then(response => {
+                 const { title, content, category } = response.data;
+                 setTitle(title);
+                 setContent(content);
+                 setCategory(category);
+             })
+             .catch(error => {
+                 console.error('There was an error fetching the note', error);
+             });
+    }, [id]);
 
     const handleSave = (e) => {
         e.preventDefault();
         const updatedNote = {
-          ...noteToEdit,
           title,
           content,
           category,
         };
 
-        updateNote(updatedNote);
-        navigate('/');
+        axios.put(`/api/notes/${id}`, updatedNote)
+             .then(response => {
+                console.log('Note updated', response.data);
+                navigate('/');
+             })
+             .catch(error => {
+                console.error('There was an error updating the note', error);
+             });
     };
 
     return (

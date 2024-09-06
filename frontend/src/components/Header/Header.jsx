@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Header.css'
 
 const Header = ({ onFilterChange }) => {
     const [activeFilter, setActiveFilter] = useState('all');
-    const location = useLocation();
 
     const handleFilterChange = (filter) => {
         setActiveFilter(filter);
@@ -14,7 +13,7 @@ const Header = ({ onFilterChange }) => {
   return (
     <header>
         <div className="logo">
-            <h1 className="titlePage">NOTE TRAKER</h1>
+            <h1 className="titlePage">NOTE TAKER</h1>
         </div>
 
         <nav>

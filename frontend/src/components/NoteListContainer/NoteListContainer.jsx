@@ -1,14 +1,27 @@
-import { useContext, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { NotesContext } from '../NoteContext/NoteContext';
 import NoteList from '../NoteList/NoteList';
+import axios from 'axios';
 import './NoteListContainer.css';
 
 const NoteListContainer = ({ filter }) => {
-    const { notes, toggleArchive, deleteNote } = useContext(NotesContext);
+    const [notes, setNotes] = useState([]);
     const [categoryFilter, setCategoryFilter] = useState('');
-
     const navigate = useNavigate();
+
+    const refreshNotes = () => {
+        axios.get('/api/notes')
+             .then(response => {
+                 setNotes(response.data);
+             })
+             .catch(error => {
+                 console.error('There was an error fetching the notes', error);
+             });
+    };
+
+    useEffect(() => {
+        refreshNotes();
+    }, []);
 
     const filteredNotes = () => {
         let filtered = notes;
@@ -35,10 +48,10 @@ const NoteListContainer = ({ filter }) => {
                 <button className="newNoteButton" onClick={() => navigate('/new')}>New Note</button>
             </div>
             <div className="noteContainer">
-                <NoteList notes={filteredNotes()} onToggleArchive={toggleArchive} onDelete={deleteNote} />
+                <NoteList notes={filteredNotes()} refreshNotes={refreshNotes} />
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default NoteListContainer;
