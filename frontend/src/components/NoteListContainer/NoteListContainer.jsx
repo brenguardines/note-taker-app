@@ -44,6 +44,7 @@ const NoteListContainer = ({ filter }) => {
                     <option value="Work">Work</option>
                     <option value="Personal">Personal</option>
                     <option value="Other">Other</option>
+                    <option value="NoCategory">No Category</option>
                 </select>
                 <button className="newNoteButton" onClick={() => navigate('/new')}>New Note</button>
             </div>

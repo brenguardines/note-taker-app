@@ -64,6 +64,7 @@ const EditNote = () => {
                 <option value="Work">Work</option>
                 <option value="Personal">Personal</option>
                 <option value="Other">Other</option>
+                <option value="NoCategory">No Category</option>
             </select>
             <div className="form-actions">
                 <button type="button" className="cancel" onClick={() => navigate('/')}>Cancel</button>
