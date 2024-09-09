@@ -3,9 +3,15 @@ import axios from 'axios';
 import './NoteItem.css'
 
 const NoteItem = ({note, refreshNotes  }) => {
+
+  const token = localStorage.getItem('authToken'); 
   const handleArchive = () => {
     const endpoint = note.archived ? `/api/notes/${note.id}/unarchive` : `/api/notes/${note.id}/archive`;
-    axios.put(endpoint)
+    axios.put(endpoint, {}, {
+      headers: {
+          Authorization: `Bearer ${token}`
+      }
+    })
          .then(() => {
              refreshNotes();
          })
@@ -15,8 +21,12 @@ const NoteItem = ({note, refreshNotes  }) => {
   };
 
   const handleDelete = () => {
-    axios.delete(`/api/notes/${note.id}`)
-         .then(() => {
+    axios.delete(`/api/notes/${note.id}`, {
+      headers: {
+          Authorization: `Bearer ${token}`
+      }
+    })
+        .then(() => {
              refreshNotes(); 
         })
         .catch(error => {

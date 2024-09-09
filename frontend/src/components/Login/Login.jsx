@@ -3,14 +3,15 @@ import axios from 'axios'
 import './Login.css'
 
 const Login = ({ setAuthToken}) => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post('/api/auth/login', {email, password})
+        axios.post('/auth/login', {username, password})
              .then(response => {
+                localStorage.setItem('authToken', response.data.token);
                  setAuthToken(response.data.token)
              })
              .catch(error => {
@@ -21,9 +22,9 @@ const Login = ({ setAuthToken}) => {
     return (
         <form className="loginForm" onSubmit={handleSubmit}>
             <h2>Login</h2>
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" value={email}
-                onChange={(e) => setEmail(e.target.value)}
+            <label htmlFor="username">Username</label>
+            <input type="username" id="username" value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
             />
             <label htmlFor="password">Password</label>
