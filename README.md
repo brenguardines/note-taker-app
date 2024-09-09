@@ -86,3 +86,5 @@ To set up the application automatically, you can use the included bash script. T
 - PUT `/api/notes/{id}/unarchive`: Unarchive a note
 - GET `/api/notes/active`: Retrieve all active (non-archived) notes
 - GET `/api/notes/archive`: Retrieve all archived notes
+- POST `/auth/login`: Create a new Login
+- POST `/auth/register`: Create a new Register
