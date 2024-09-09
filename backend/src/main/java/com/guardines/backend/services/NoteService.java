@@ -2,8 +2,13 @@ package com.guardines.backend.services;
 
 import com.guardines.backend.exceptions.NoteNotFoundException;
 import com.guardines.backend.models.Note;
+import com.guardines.backend.models.User;
 import com.guardines.backend.repositories.NoteRepository;
+import com.guardines.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,11 +25,14 @@ public class NoteService {
         .orElseThrow(() -> new NoteNotFoundException("Note not found"));
   }
 
-  public List<Note> getAllNotes(){
-    return noteRepository.findAll();
+  public List<Note> getAllNotesByUser(User user){
+    return noteRepository.findAll().stream()
+        .filter(note -> note.getUser().getId().equals(user.getId()))
+        .collect(Collectors.toList());
   }
 
-  public Note createNote(Note note){
+  public Note createNote(Note note, User user){
+    note.setUser(user);
     return noteRepository.save(note);
   }
 
@@ -52,21 +60,21 @@ public class NoteService {
     noteRepository.save(note);
   }
 
-  public List<Note> getArchivedNotes(){
+  public List<Note> getArchivedNotesByUser(User user){
     return noteRepository.findAll().stream()
-        .filter(note -> note.isArchived())
+        .filter(note -> note.isArchived() && note.getUser().getId().equals(user.getId()))
         .collect(Collectors.toList());
   }
 
-  public List<Note> getActiveNotes(){
+  public List<Note> getActiveNotesByUser(User user){
     return noteRepository.findAll().stream()
-        .filter(note -> !note.isArchived())
+        .filter(note -> !note.isArchived()  & note.getUser().getId().equals(user.getId()))
         .collect(Collectors.toList());
   }
 
-  public List<Note> getNotesByCategory(String category){
+  public List<Note> getNotesByCategoryByUser(String category, User user){
     return noteRepository.findAll().stream()
-        .filter(note -> note.getCategory().equalsIgnoreCase(category))
+        .filter(note -> note.getCategory().equalsIgnoreCase(category) && note.getUser().getId().equals(user.getId()))
         .collect(Collectors.toList());
   }
 }

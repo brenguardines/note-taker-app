@@ -4,13 +4,24 @@ import NoteList from '../NoteList/NoteList';
 import axios from 'axios';
 import './NoteListContainer.css';
 
-const NoteListContainer = ({ filter }) => {
+const NoteListContainer = ({ filter, authToken }) => {
     const [notes, setNotes] = useState([]);
     const [categoryFilter, setCategoryFilter] = useState('');
     const navigate = useNavigate();
 
+    const token = localStorage.getItem('authToken'); 
+
     const refreshNotes = () => {
-        axios.get('/api/notes')
+        if (!token) {
+            console.error("No authToken found");
+            navigate('/login');
+        }
+
+        axios.get('/api/notes', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
              .then(response => {
                  setNotes(response.data);
              })
@@ -20,8 +31,12 @@ const NoteListContainer = ({ filter }) => {
     };
 
     useEffect(() => {
-        refreshNotes();
-    }, []);
+        if (!token) {
+            navigate('/login');
+        } else {
+            refreshNotes();
+        }
+    }, [token, navigate]);
 
     const filteredNotes = () => {
         let filtered = notes;
