@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
+import userLogo from '../../img/userIcon.webp'
 import './Header.css'
 
 const Header = ({ onFilterChange }) => {
@@ -32,6 +33,11 @@ const Header = ({ onFilterChange }) => {
                     <Link to="/archived" onClick={() => handleFilterChange('archived')} className={activeFilter === 'archived' ? 'archived' : ''}>
                         Archived
                     </Link>
+                </li>
+                <li>
+                    <div className='user-logo'>
+                        <img src={userLogo} alt="" />
+                    </div>
                 </li>
             </ul>
         </nav>

@@ -29,3 +29,12 @@ li:hover {
 .titulo {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
+.user-logo {
+    align-items: center;
+}
+
+.user-logo img {
+    width: 50px;
+
+}

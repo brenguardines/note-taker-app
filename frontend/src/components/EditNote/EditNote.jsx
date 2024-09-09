@@ -11,8 +11,14 @@ const EditNote = () => {
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
 
+    const token = localStorage.getItem('authToken'); 
+
     useEffect(() => {
-        axios.get(`/api/notes/${id}`)
+        axios.get(`/api/notes/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
              .then(response => {
                  const { title, content, category } = response.data;
                  setTitle(title);
@@ -32,7 +38,11 @@ const EditNote = () => {
           category,
         };
 
-        axios.put(`/api/notes/${id}`, updatedNote)
+        axios.put(`/api/notes/${id}`, updatedNote, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
              .then(response => {
                 console.log('Note updated', response.data);
                 navigate('/');

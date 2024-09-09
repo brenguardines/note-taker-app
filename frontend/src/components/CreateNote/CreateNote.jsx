@@ -3,14 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './CreateNote.css';
 
-const CreateNote = () => {
+const CreateNote = ({authToken}) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
     const navigate = useNavigate();
 
+    const token = localStorage.getItem('authToken'); 
+
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!token) {
+            console.error("Auth token is missing");
+        }
+
+        console.log("Token front create note:", token);
         const newNote = {
             title,
             content,
@@ -18,7 +26,11 @@ const CreateNote = () => {
             archived: false,
         };
 
-        axios.post('/api/notes', newNote)
+        axios.post('/api/notes', newNote, {
+            headers: {
+                Authorization: `Bearer ${token}` 
+            }
+        })
              .then(response => {
                  console.log('Note created', response.data);
                  navigate('/');
