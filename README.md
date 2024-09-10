@@ -29,9 +29,8 @@ Note Taker is a web application that allows users to create, edit, delete, archi
   
 ## Setup Instructions
 ### Clone the repository
-```bash ```
-1. git clone https://github.com/brenguardines/note-taker-app.git
-2. cd note-taker-app
+1. ```git clone https://github.com/brenguardines/note-taker-app.git```
+2. ```cd note-taker-app```
    
 ### Backend setup
 1. Navigate to the backend directory:
